@@ -29,7 +29,7 @@ class RandomPostWidget extends WP_Widget {
 		$post = rwp_get_random_post();
 		$this->post = $post;
 		$this->post_title = $post['title'];
-		$this->post_url = $post['url'];
+		$this->post_url = $post['permalink'];
 		
 		parent::__construct(
 	 		'Random_Post_Widget', // Base ID
@@ -67,7 +67,7 @@ class RandomPostWidget extends WP_Widget {
 		echo $before_widget;
 		if ( ! empty( $title ) )
 			echo $before_title . $title . $after_title;
-			echo "<a href='$this->post_url'>";
+			echo "<a href='".$this->post_url."'>";
 				echo $this->post_title;
 			echo "</a>";
 		echo $after_widget;
