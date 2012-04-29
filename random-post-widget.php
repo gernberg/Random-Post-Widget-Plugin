@@ -60,11 +60,14 @@ class RandomPostWidget extends WP_Widget {
 		$title = apply_filters('widget_title', $instance['title']);
 
 		echo $before_widget;
+		
 		if(!empty( $title))
 			echo $before_title . $title . $after_title;
-			echo "<a href='".$this->post_url."'>";
-			echo $this->post_title;
-			echo "</a>";
+		
+		echo "<a href='".$this->post_url."'>";
+		echo $this->post_title;
+		echo "</a>";
+		
 		echo $after_widget;
 	}
 }
