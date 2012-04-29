@@ -19,16 +19,11 @@ if ( !function_exists( 'add_action' ) ) {
 require "random-post-widget-functions.php";
 
 class RandomPostWidget extends WP_Widget {
-	private $post;
-	private $post_title;
-	private $post_url;
+	private $posts = array();
 	
 	public function __construct() {
-		$post = rwp_get_random_post();
-		$this->post = $post;
-		$this->post_title = $post['title'];
-		$this->post_url = $post['permalink'];
-		
+		$this->posts = rwp_get_random_posts(2);
+		var_dump($this->posts);
 		parent::__construct(
 	 		'Random_Post_Widget',
 			'Random Post Widget',
@@ -60,11 +55,18 @@ class RandomPostWidget extends WP_Widget {
 		$title = apply_filters('widget_title', $instance['title']);
 
 		echo $before_widget;
-		if(!empty( $title))
-			echo $before_title . $title . $after_title;
-			echo "<a href='".$this->post_url."'>";
-			echo $this->post_title;
+		if(!empty( $title)) echo $before_title.$title.$after_title;
+		
+		echo "<ul>";
+		for($i = 0; $i < sizeof($this->posts); $i++) {
+			echo "<li>";
+			echo "<a href='".$posts[$i]."'>";
+			echo $posts[$i]['post_title'];
 			echo "</a>";
+			echo "</li>";
+		}
+		echo "</ul>";
+		
 		echo $after_widget;
 	}
 }
