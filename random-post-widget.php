@@ -40,7 +40,8 @@ class RandomPostWidget extends WP_Widget {
 
 	public function update($new_instance, $old_instance) {
 		return array(
-			'title' => strip_tags($new_instance['title'])
+			'title' => strip_tags($new_instance['title']),
+			'numberposts' => strip_tags($new_instance['numberposts'])
 		);
 	}
 
