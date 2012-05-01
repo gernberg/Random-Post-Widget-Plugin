@@ -54,10 +54,11 @@ class RandomPostWidget extends WP_Widget {
 		$title			= apply_filters('widget_title', $instance['title']);
 		$numberposts	= $instance['numberposts'];
 		$this->posts	= rwp_get_random_posts($numberposts);
+		
 
 		echo $before_widget;
-		if(!empty($title)) echo $before_title.$title.$after_title;
 		
+		if(!empty($title)) echo $before_title.$title.$after_title;
 		echo "<ul>";
 		for($i = 0; $i < sizeof($this->posts); $i++) {
 			echo "<li>";
