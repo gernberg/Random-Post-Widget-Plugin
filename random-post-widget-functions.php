@@ -1,6 +1,6 @@
 <?php
 
-function rwp_get_random_posts($count) {
+function rwp_get_random_posts($count=1) {
 	$args = array(
 		"numberposts"	=> $count,
 		"orderby"		=> "rand"

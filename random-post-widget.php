@@ -22,7 +22,7 @@ class RandomPostWidget extends WP_Widget {
 	private $posts = array();
 	
 	public function __construct() {
-		$this->posts = rwp_get_random_posts(1);
+		$this->posts = rwp_get_random_posts();
 		
 		parent::__construct(
 	 		'Random_Post_Widget',
@@ -39,18 +39,24 @@ class RandomPostWidget extends WP_Widget {
 	}
 
 	public function update($new_instance, $old_instance) {
+		$title			= strip_tags($new_instance['title']);
+		$numberposts	= strip_tags($new_instance['numberposts']);
+		
 		return array(
-			'title' => strip_tags($new_instance['title']),
-			'numberposts' => strip_tags($new_instance['numberposts'])
+			'title'			=> $title,
+			'numberposts'	=> $numberposts
 		);
 	}
 
-	public function widget( $args, $instance ) {
+	public function widget($args, $instance) {
 		extract($args);
-		$title = apply_filters('widget_title', $instance['title']);
+		
+		$title			= apply_filters('widget_title', $instance['title']);
+		$numberposts	= $instance['numberposts'];
+		$this->posts	= rwp_get_random_posts($numberposts);
 
 		echo $before_widget;
-		if(!empty( $title)) echo $before_title.$title.$after_title;
+		if(!empty($title)) echo $before_title.$title.$after_title;
 		
 		echo "<ul>";
 		for($i = 0; $i < sizeof($this->posts); $i++) {
