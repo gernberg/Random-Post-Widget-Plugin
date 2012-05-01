@@ -23,7 +23,6 @@ class RandomPostWidget extends WP_Widget {
 	
 	public function __construct() {
 		$this->posts = rwp_get_random_posts(1);
-		//var_dump($this->posts);
 		
 		parent::__construct(
 	 		'Random_Post_Widget',
@@ -33,16 +32,10 @@ class RandomPostWidget extends WP_Widget {
 	}
 
  	public function form($instance) {
-		if(isset($instance['title'])) {
-			$title = $instance['title'];
-		} else {
-			$title = __('New title', 'text_domain');
-		}
+ 		$title		 = (isset($instance['title'])) ? $instance['title'] : __('New title', 'text_domain') ;
+		$numberposts = (isset($instance['numberposts'])) ? $instance['numberposts'] : __('Number of posts', 'text_domain') ;
 		
-		echo "<p>";
-		echo "<label for=".$this->get_field_id('title').">"._e( 'Title:' )."</label>"; 
-		echo "<input class='widefat' id=".$this->get_field_id('title')." name=".$this->get_field_name('title')." type='text' value=".esc_attr($title)." />";
-		echo "</p>";
+		include plugin_dir_path(__FILE__)."random-post-widget-tmpl.php";
 	}
 
 	public function update($new_instance, $old_instance) {
