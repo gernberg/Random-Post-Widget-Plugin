@@ -22,8 +22,9 @@ class RandomPostWidget extends WP_Widget {
 	private $posts = array();
 	
 	public function __construct() {
-		$this->posts = rwp_get_random_posts(2);
-		var_dump($this->posts);
+		$this->posts = rwp_get_random_posts(1);
+		//var_dump($this->posts);
+		
 		parent::__construct(
 	 		'Random_Post_Widget',
 			'Random Post Widget',
@@ -60,8 +61,8 @@ class RandomPostWidget extends WP_Widget {
 		echo "<ul>";
 		for($i = 0; $i < sizeof($this->posts); $i++) {
 			echo "<li>";
-			echo "<a href='".$posts[$i]."'>";
-			echo $posts[$i]['post_title'];
+			echo "<a href='".$this->posts[$i]->guid."'>";
+			echo $this->posts[$i]->post_title;
 			echo "</a>";
 			echo "</li>";
 		}
