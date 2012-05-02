@@ -19,10 +19,8 @@ if ( !function_exists( 'add_action' ) ) {
 require "random-post-widget-functions.php";
 
 class RandomPostWidget extends WP_Widget {
-	private $posts = array();
 	
 	public function __construct() {
-		$this->posts = rwp_get_random_posts();
 		
 		parent::__construct(
 	 		'Random_Post_Widget',
@@ -53,7 +51,7 @@ class RandomPostWidget extends WP_Widget {
 		
 		$title = apply_filters('widget_title', $instance['title']);
 		$numberposts = $instance['numberposts'];
-		$this->posts = rwp_get_random_posts($numberposts);
+		$posts = rwp_get_random_posts($numberposts);
 		
 		echo $before_widget;
 		
@@ -61,7 +59,7 @@ class RandomPostWidget extends WP_Widget {
 			echo $before_title.$title.$after_title;
 		}
 		echo "<ul>";
-		foreach($this->posts as $post){
+		foreach($posts as $post){
 			echo "<li>";
 			echo "<a href='".get_permalink($post->ID)."'>";
 			echo $post->post_title;
