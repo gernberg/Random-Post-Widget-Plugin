@@ -32,38 +32,39 @@ class RandomPostWidget extends WP_Widget {
 	}
 
  	public function form($instance) {
- 		$title		 = (isset($instance['title'])) ? $instance['title'] : __('New title', 'text_domain') ;
+ 		$title = (isset($instance['title'])) ? $instance['title'] : __('New title', 'text_domain') ;
 		$numberposts = (isset($instance['numberposts'])) ? $instance['numberposts'] : __('Number of posts', 'text_domain') ;
 		
 		include plugin_dir_path(__FILE__)."random-post-widget-tmpl.php";
 	}
 
 	public function update($new_instance, $old_instance) {
-		$title			= strip_tags($new_instance['title']);
-		$numberposts	= strip_tags($new_instance['numberposts']);
+		$title = strip_tags($new_instance['title']);
+		$numberposts = strip_tags($new_instance['numberposts']);
 		
 		return array(
-			'title'			=> $title,
-			'numberposts'	=> $numberposts
+			'title' => $title,
+			'numberposts' => $numberposts
 		);
 	}
 
 	public function widget($args, $instance) {
 		extract($args);
 		
-		$title			= apply_filters('widget_title', $instance['title']);
-		$numberposts	= $instance['numberposts'];
-		$this->posts	= rwp_get_random_posts($numberposts);
+		$title = apply_filters('widget_title', $instance['title']);
+		$numberposts = $instance['numberposts'];
+		$this->posts = rwp_get_random_posts($numberposts);
 		
-
 		echo $before_widget;
 		
-		if(!empty($title)) echo $before_title.$title.$after_title;
+		if(!empty($title)){
+			echo $before_title.$title.$after_title;
+		}
 		echo "<ul>";
-		for($i = 0; $i < sizeof($this->posts); $i++) {
+		foreach($this->posts as $post){
 			echo "<li>";
-			echo "<a href='".$this->posts[$i]->guid."'>";
-			echo $this->posts[$i]->post_title;
+			echo "<a href='".get_permalink($post->ID)."'>";
+			echo $post->post_title;
 			echo "</a>";
 			echo "</li>";
 		}
@@ -78,5 +79,3 @@ function rwp_register_widget() {
 	register_widget('RandomPostWidget');
 }
 add_action('widgets_init', 'rwp_register_widget');
-
-?>
